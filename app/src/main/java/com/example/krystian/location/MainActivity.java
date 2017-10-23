@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.INTERNET},
                 1);
     }
 
@@ -24,6 +24,10 @@ public class MainActivity extends AppCompatActivity {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     LocationGPS gps = new LocationGPS(this);
+                }
+                if (grantResults.length > 1
+                        && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                    LocationNetwork network = new LocationNetwork(this);
                 }
                 return;
             }

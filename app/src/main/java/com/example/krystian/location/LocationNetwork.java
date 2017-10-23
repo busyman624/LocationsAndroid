@@ -12,7 +12,7 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.widget.TextView;
 
-public class LocationGPS extends Service implements LocationListener {
+public class LocationNetwork extends Service implements LocationListener {
 
     private final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10;
     private final long MIN_TIME_BW_UPDATES = 60000;
@@ -22,10 +22,10 @@ public class LocationGPS extends Service implements LocationListener {
     private TextView textView;
 
 
-    public LocationGPS(Context context){
+    public LocationNetwork(Context context){
         this.context=context;
         manager =(LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        textView = (TextView) ((Activity)context).findViewById(R.id.GPS);
+        textView = (TextView) ((Activity)context).findViewById(R.id.Network);
         getLocation();
     }
 
@@ -33,13 +33,13 @@ public class LocationGPS extends Service implements LocationListener {
         if(manager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
             try{
                 manager.requestLocationUpdates(
-                        LocationManager.GPS_PROVIDER,
+                        LocationManager.NETWORK_PROVIDER,
                         MIN_TIME_BW_UPDATES,
                         MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
                 if (manager != null) {
-                    location = manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                    location = manager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                 }
-                textView.setText("GPS:"+Double.toString(location.getLatitude())+"  "+ Double.toString(location.getLongitude()));
+                textView.setText("Network:"+Double.toString(location.getLatitude())+"  "+ Double.toString(location.getLongitude()));
             }
             catch (SecurityException e){    e.printStackTrace();    }
         }
